@@ -3,7 +3,7 @@
 # Declare variables to be passed into your templates.
 
 # -- The number of replicas
-replicaCount: 1
+replicaCount: 2
 
 # -- The `spec.strategyTpye` for updates
 strategyType: RollingUpdate
@@ -98,7 +98,7 @@ serviceWeb:
   # -- Configuration for the HTTP web interface listener
   http:
     # -- Generate a service for HTTP traffic
-    enabled: true
+    enabled: false
 
     # -- The port of the web HTTP service
     port: 80
@@ -118,7 +118,7 @@ serviceWeb:
     nodePort: ""
 
   # -- `spec.type` for the web interface Service
-  type: ClusterIP
+  type: LoadBalancer
 
   # -- `spec.externalTrafficPolicy` for the web interface Service
   externalTrafficPolicy: Local
@@ -281,7 +281,7 @@ extraEnvVarsSecret: {}
   #   key: secret-key
 
 # -- default upstream DNS 1 server to use
-DNS1: "8.8.8.8"
+DNS1: "10.70.0.1"
 # -- default upstream DNS 2 server to use
 DNS2: "8.8.4.4"
 
@@ -512,11 +512,11 @@ monitoring:
   # -- Preferably adding prometheus scrape annotations rather than enabling podMonitor.
   podMonitor:
     # -- set this to true to enable podMonitor
-    enabled: false
+    enabled: true
   # -- Sidecar configuration
   sidecar:
     # -- set this to true to enable podMonitor as sidecar
-    enabled: false
+    enabled: true
     port: 9617
     image:
       # -- the repository to use
@@ -535,6 +535,7 @@ podDnsConfig:
   policy: "None"
   nameservers:
     - 127.0.0.1
+    - 10.70.0.1
     - 8.8.8.8
 
 # -- configure a Pod Disruption Budget
